@@ -234,6 +234,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         key: "ngOnInit",
         value: function ngOnInit() {
           this.Reset();
+          /* Runs Reset on page load */
         }
       }, {
         key: "Print",
@@ -248,52 +249,95 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           document.getElementById("respiratory_rate-no").checked = true;
           document.getElementById("bp-no").checked = true;
           document.getElementById("age-no").checked = true;
+          /*(<HTMLInputElement>document.getElementById("pneumonia-yes")).checked = true;  Not sure if i want this ? */
+
           this.Points = 0;
           /* Resets score to default*/
 
-          this.Check();
-          this.CheckS();
+          this.CheckPneumonia();
+        }
+      }, {
+        key: "CheckPneumonia",
+        value: function CheckPneumonia() {
+          if (document.getElementById("pneumonia-no").checked === true) {
+            document.getElementById("Pneumonia").style.display = 'none';
+            document.getElementById("AnyInfection").style.display = 'block';
+            this.CheckTxtAnyInfection();
+            this.CheckS();
+          } else {
+            document.getElementById("Pneumonia").style.display = 'block';
+            document.getElementById("AnyInfection").style.display = 'none';
+            this.CheckTxtPneumonia();
+            this.CheckS();
+          }
         }
       }, {
         key: "Add",
         value: function Add() {
           this.Points++;
-          this.Check();
-          this.CheckS();
+          this.CheckPneumonia();
         }
       }, {
         key: "Sub",
         value: function Sub() {
           this.Points--;
-          this.Check();
-          this.CheckS();
+          this.CheckPneumonia();
         }
       }, {
-        key: "Check",
-        value: function Check() {
+        key: "CheckTxtPneumonia",
+        value: function CheckTxtPneumonia() {
           switch (this.Points) {
             case 0:
-              this.Txt0();
+              this.PneumoniaTxt0();
               break;
 
             case 1:
-              this.Txt1();
+              this.PneumoniaTxt1();
               break;
 
             case 2:
-              this.Txt2();
+              this.PneumoniaTxt2();
               break;
 
             case 3:
-              this.Txt3();
+              this.PneumoniaTxt3();
               break;
 
             case 4:
-              this.Txt4();
+              this.PneumoniaTxt4();
               break;
 
             case 5:
-              this.Txt4();
+              this.PneumoniaTxt4();
+              break;
+          }
+        }
+      }, {
+        key: "CheckTxtAnyInfection",
+        value: function CheckTxtAnyInfection() {
+          switch (this.Points) {
+            case 0:
+              this.AnyInfectionTxt0();
+              break;
+
+            case 1:
+              this.AnyInfectionTxt0();
+              break;
+
+            case 2:
+              this.AnyInfectionTxt1();
+              break;
+
+            case 3:
+              this.AnyInfectionTxt1();
+              break;
+
+            case 4:
+              this.AnyInfectionTxt2();
+              break;
+
+            case 5:
+              this.AnyInfectionTxt2();
               break;
           }
         }
@@ -311,33 +355,51 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           }
         }
       }, {
-        key: "Txt0",
-        value: function Txt0() {
+        key: "PneumoniaTxt0",
+        value: function PneumoniaTxt0() {
           document.getElementById("Mortality").innerHTML = "Low risk group: 0.6% 30-day mortality.";
           document.getElementById("Treatment").innerHTML = "Consider outpatient treatment.";
         }
       }, {
-        key: "Txt1",
-        value: function Txt1() {
+        key: "PneumoniaTxt1",
+        value: function PneumoniaTxt1() {
           document.getElementById("Mortality").innerHTML = "Low risk group: 2.7% 30-day mortality.";
           document.getElementById("Treatment").innerHTML = "Consider outpatient treatment.";
         }
       }, {
-        key: "Txt2",
-        value: function Txt2() {
+        key: "PneumoniaTxt2",
+        value: function PneumoniaTxt2() {
           document.getElementById("Mortality").innerHTML = "Moderate risk group: 6.8% 30-day mortality.";
           document.getElementById("Treatment").innerHTML = "Consider inpatient treatment or outpatient with close followup.";
         }
       }, {
-        key: "Txt3",
-        value: function Txt3() {
+        key: "PneumoniaTxt3",
+        value: function PneumoniaTxt3() {
           document.getElementById("Mortality").innerHTML = "Severe risk group: 14.0% 30-day mortality.";
           document.getElementById("Treatment").innerHTML = "Consider inpatient treatment with possible intensive care admission.";
         }
       }, {
-        key: "Txt4",
-        value: function Txt4() {
+        key: "PneumoniaTxt4",
+        value: function PneumoniaTxt4() {
           document.getElementById("Mortality").innerHTML = "Highest risk group: 27.8% 30-day mortality.";
+          document.getElementById("Treatment").innerHTML = "Consider inpatient treatment with possible intensive care admission.";
+        }
+      }, {
+        key: "AnyInfectionTxt0",
+        value: function AnyInfectionTxt0() {
+          document.getElementById("Mortality").innerHTML = "Low risk group: < 5% mortality.";
+          document.getElementById("Treatment").innerHTML = "Consider outpatient treatment.";
+        }
+      }, {
+        key: "AnyInfectionTxt1",
+        value: function AnyInfectionTxt1() {
+          document.getElementById("Mortality").innerHTML = "Moderate risk group: < 10% mortality.";
+          document.getElementById("Treatment").innerHTML = "Consider inpatient treatment or outpatient with close followup.";
+        }
+      }, {
+        key: "AnyInfectionTxt2",
+        value: function AnyInfectionTxt2() {
+          document.getElementById("Mortality").innerHTML = "Highest risk group: 15-30% mortality.";
           document.getElementById("Treatment").innerHTML = "Consider inpatient treatment with possible intensive care admission.";
         }
       }]);
@@ -352,9 +414,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     CalculatorComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
       type: CalculatorComponent,
       selectors: [["app-calculator"]],
-      decls: 72,
+      decls: 105,
       vars: 1,
-      consts: [["type", "radio", "id", "confusion-no", "name", "confusion", "checked", "true", 3, "change"], ["type", "radio", "id", "confusion-yes", "name", "confusion", 3, "change"], ["type", "radio", "id", "bun-no", "name", "bun", "checked", "true", 3, "change"], ["type", "radio", "id", "bun-yes", "name", "bun", 3, "change"], ["type", "radio", "id", "respiratory_rate-no", "name", "respiratory_rate", "checked", "true", 3, "change"], ["type", "radio", "id", "respiratory_rate-yes", "name", "respiratory_rate", 3, "change"], ["type", "radio", "id", "bp-no", "name", "bp", "checked", "true", 3, "change"], ["type", "radio", "id", "bp-yes", "name", "bp", 3, "change"], ["type", "radio", "id", "age-no", "name", "age", "checked", "true", 3, "change"], ["type", "radio", "id", "age-yes", "name", "age", 3, "change"], ["type", "button", 3, "click"], ["id", "Result"], ["id", "Point"], ["id", "Mortality"], ["id", "Treatment"], ["href", "https://en.wikipedia.org/wiki/CURB-65", "target", "_blank"], [2, "list-style-type", "none"]],
+      consts: [["type", "radio", "id", "confusion-no", "name", "confusion", "checked", "true", 3, "change"], ["type", "radio", "id", "confusion-yes", "name", "confusion", 3, "change"], ["type", "radio", "id", "bun-no", "name", "bun", "checked", "true", 3, "change"], ["type", "radio", "id", "bun-yes", "name", "bun", 3, "change"], ["type", "radio", "id", "respiratory_rate-no", "name", "respiratory_rate", "checked", "true", 3, "change"], ["type", "radio", "id", "respiratory_rate-yes", "name", "respiratory_rate", 3, "change"], ["type", "radio", "id", "bp-no", "name", "bp", "checked", "true", 3, "change"], ["type", "radio", "id", "bp-yes", "name", "bp", 3, "change"], ["type", "radio", "id", "age-no", "name", "age", "checked", "true", 3, "change"], ["type", "radio", "id", "age-yes", "name", "age", 3, "change"], ["type", "radio", "id", "pneumonia-yes", "name", "pneumonia", "checked", "true", 3, "change"], ["type", "radio", "id", "pneumonia-no", "name", "pneumonia", 3, "change"], ["type", "button", 3, "click"], ["id", "Result"], ["id", "Point"], ["id", "Mortality"], ["id", "Treatment"], ["id", "Pneumonia"], ["href", "https://en.wikipedia.org/wiki/CURB-65", "target", "_blank"], [2, "list-style-type", "none"], ["id", "AnyInfection"]],
       template: function CalculatorComponent_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "h1");
@@ -497,121 +559,231 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](33, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](34, "button", 10);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](34, "label");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function CalculatorComponent_Template_button_click_34_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](35, "Pneumonia:");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](36, "input", 10);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function CalculatorComponent_Template_input_change_36_listener() {
+            return ctx.CheckPneumonia();
+          });
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](37, "label");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](38, "Any infection:");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](39, "input", 11);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function CalculatorComponent_Template_input_change_39_listener() {
+            return ctx.CheckPneumonia();
+          });
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](40, "br");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](41, "br");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](42, "button", 12);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function CalculatorComponent_Template_button_click_42_listener() {
             return ctx.Reset();
           });
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](35, "Reset");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](43, "Reset");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](36, "button", 10);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](44, "button", 12);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function CalculatorComponent_Template_button_click_36_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function CalculatorComponent_Template_button_click_44_listener() {
             return ctx.Print();
           });
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](37, "Print");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](45, "Print");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](38, "p", 11);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](46, "p", 13);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](39);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](47);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](40, "span", 12);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](41, "p", 13);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](42, "p", 14);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](43, "h2");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](44, "Pneumonia");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](48, "span", 14);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](45, "p");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](49, "p", 15);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](46, "The risk of death at 30 days increases as the score increases:");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](50, "p", 16);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](51, "div", 17);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](47, "Ul");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](52, "h2");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](48, "li");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](49, "0\u20140.6%");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](53, "Pneumonia");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](50, "li");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](54, "p");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](51, "1\u20142.7%");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](52, "li");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](53, "2\u20146.8%");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](55, "The risk of death at 30 days increases as the score increases:");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](54, "li");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](56, "Ul");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](55, "3\u201414.0%");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](57, "li");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](56, "li");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](57, "4\u201427.8%");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](58, "0\u20140.6%");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](58, "li");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](59, "li");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](59, "5\u201427.8%");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](60, "1\u20142.7%");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](61, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](62, "2\u20146.8%");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](63, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](64, "3\u201414.0%");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](65, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](66, "4\u201427.8%");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](67, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](68, "5\u201427.8%");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](60, "p");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](69, "p");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](61, "The ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](70, "The ");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](62, "a", 15);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](71, "a", 18);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](63, "CURB-65");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](64, " is used as a means of deciding the action that is needed to be taken for that patient.");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](72, "CURB-65");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](65, "Ul", 16);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](66, "li");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](67, "0-1: Treat as an outpatient");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](73, " is used as a means of deciding the action that is needed to be taken for that patient.");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](68, "li");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](74, "Ul", 19);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](69, "2: Consider a short stay in hospital or watch very closely as an outpatient");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](75, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](76, "0-1: Treat as an outpatient");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](70, "li");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](77, "li");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](71, "3-5: Requires hospitalization with consideration as to whether they need to be in the intensive care unit");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](78, "2: Consider a short stay in hospital or watch very closely as an outpatient");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](79, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](80, "3-5: Requires hospitalization with consideration as to whether they need to be in the intensive care unit");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](81, "div", 20);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](82, "h2");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](83, "Any infection");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](84, "p");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](85, "Patients with any type of infection (half of the patients had pneumonia), the risk of death increases as the score increases:");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](86, "Ul");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](87, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](88, "0 to 1 < 5% mortality");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](89, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](90, "2 to 3 < 10% mortality");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](91, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](92, "4 to 5 15-30% mortality");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](93, "p");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](94, "The ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](95, "a", 18);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](96, "CURB-65");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](97, " is used as a means of deciding the action that is needed to be taken for that patient.");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](98, "Ul", 19);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](99, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](100, "0-1: Treat as an outpatient");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](101, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](102, "2-3: Consider a short stay in hospital or watch very closely as an outpatient");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](103, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](104, "4-5: Requires hospitalization with consideration as to whether they need to be in the intensive care unit");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -619,7 +791,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }
 
         if (rf & 2) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](39);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](47);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("Results: ", ctx.Points, " ");
         }
@@ -636,9 +808,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           templateUrl: './calculator.component.html',
           styleUrls: ['./calculator.component.css']
         }]
-      }], function () {
-        return [];
-      }, null);
+      }], null, null);
     })();
     /***/
 
